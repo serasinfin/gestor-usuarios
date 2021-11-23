@@ -1,26 +1,16 @@
 /* eslint-disable */
 import {useState} from 'react';
-import {useForm} from './hooks/useForm';
-import {Input} from './components/Input';
 import {Card} from './components/Card'
 import {Container} from './components/Container'
-import {Button} from './components/Button'
+import {UserForm} from './components/UserForm'
 
 function App() {
     const [usuarios, setUsuarios] = useState([])
-    const [form, handleChange, reset] = useForm({
-        name: '',
-        lastname: '',
-        email: ''
-    })
-
-    const submit = e => {
-        e.preventDefault()
+    const submit = usuario => {
         setUsuarios([
             ...usuarios,
-            form,
+            usuario,
         ])
-        reset()
     }
 
   return (
@@ -28,33 +18,15 @@ function App() {
           <Container>
               <Card>
                   <div style={{padding: 20}}>
-                      <form onSubmit={submit}>
-                          <Input
-                              label={'Nombre '}
-                              name={'name'}
-                              value={form.name}
-                              onChange={handleChange}
-                          />
-                          <Input
-                              label={'Apellido '}
-                              name={'lastname'}
-                              value={form.lastname}
-                              onChange={handleChange}
-                          />
-                          <Input
-                              label={'Correo '}
-                              name={'email'}
-                              value={form.email}
-                              onChange={handleChange}
-                          />
-                          <Button>Enviar</Button>
-                      </form>
+                      <UserForm submit={submit}/>
                   </div>
               </Card>
               <Card>
                   <ul>
                       {usuarios.map(x =>
-                          <li key={x.email}>{`${x.name} ${x.lastname} ${x.email}`}</li>
+                          <li key={x.email}>
+                              {`${x.name} ${x.lastname} ${x.email}`}
+                          </li>
                       )}
                   </ul>
               </Card>
